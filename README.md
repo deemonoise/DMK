@@ -1,5 +1,7 @@
 # DMK (deemonoise's MIDI kontroller)
 
+<img src="https://user-images.githubusercontent.com/1438829/218045065-a077a57c-061d-4a7d-aa34-d1fe69b456fe.jpeg" width="300">
+
 4x4 MIDI controller with arcade buttons.
 It has two working modes:
 Note - regular mode. You can select scale, root note and transpose by octaves. You can also turn on hold (great for arpegios)
@@ -15,4 +17,5 @@ It uses two arduino nanos connected by serial software. The 1st nano is used as 
 |Arcade button 24mm|16|
 |OLED 0.96'' i2c|1|
 |Rotary encoder|1|
-|MIDI connector|1|
+|MIDI connector|1
+

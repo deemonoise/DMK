@@ -399,7 +399,7 @@ void processEncoder() {
       case 5:
         midiChanel += enc.dir();
         if (midiChanel > 16) midiChanel = 1;
-        if (midiChanel < 0) midiChanel = 16;
+        if (midiChanel <= 0) midiChanel = 16;
         displayChanel();
         break;        
 

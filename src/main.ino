@@ -108,15 +108,6 @@ String rootNotes[12] = {"C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A
 
 bool heldKeys[16];
 
-typedef struct {
-  int note;
-  byte dur;
-  byte vel;
-} noteStr;
-
-// {note, dur, vel}
-noteStr sequence[32];
-
 void displayMode() {
   oled.home();
   oled.setCursor(13, 0);
@@ -514,7 +505,6 @@ void setup() {
   keyboard.begin(4800);
 
   for (int i = 0; i <= 16; i++) heldKeys[i] = false;
-  for (int i = 0; i <= 32; i++) sequence[i] = (noteStr) {0, 16, 127};
 
   oled.init();
   displayAll();

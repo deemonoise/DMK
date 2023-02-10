@@ -57,7 +57,7 @@ bool isEditing = false;
 bool hold = false;
 bool seqEdit = false;
 
-String modes[3] = {"note", "blackbox", "seq"};
+ String modes[3] = {"note", "blackbox"};
 
 String bbModes[2] = {"PAD", "SEQ"};
 
@@ -111,7 +111,7 @@ bool heldKeys[16];
 void displayMode() {
   oled.home();
   oled.setCursor(13, 0);
-  oled.print("         ");
+  oled.print(F("         "));
 
   oled.home();
   oled.setCursor(13, 0);
@@ -121,7 +121,7 @@ void displayMode() {
 void displayScale() {
   oled.home();
   oled.setCursor(13, 1);
-  oled.print("             ");
+  oled.print(F("             "));
 
   oled.home();
   oled.setCursor(13, 1);
@@ -130,33 +130,33 @@ void displayScale() {
   } else if (mode == BB_MODE) {
     oled.print(bbModes[bbMode]);
   } else {
-    oled.print("edit");
+    oled.print(F("edit"));
   }
 }
 
 void displayRoot() {
   oled.home();
   oled.setCursor(13, 2);
-  oled.print("         ");
+  oled.print(F("         "));
 
   if (mode != NOTE_MODE) return;
 
   oled.home();
   oled.setCursor(13, 2);
-  oled.print("root: ");
+  oled.print(F("root: "));
   oled.print(rootNotes[rootNote]);
 }
 
 void displayOctave() {
   oled.home();
   oled.setCursor(13, 3);
-  oled.print("         ");
+  oled.print(F("         "));
 
   if (mode != NOTE_MODE) return;
 
   oled.home();
   oled.setCursor(13, 3);
-  oled.print("tsp.: ");
+  oled.print(F("tsp.: "));
   oled.print(octave);
 }
 
@@ -172,35 +172,35 @@ void displayHold() {
   oled.print("hold: ");
   if (hold) {
     oled.invertText(true);
-    oled.print("ON");
+    oled.print(F("ON"));
     oled.invertText(false);
   }
 
   if (!hold) {
     oled.invertText(false);
-    oled.print("OFF");
+    oled.print(F("OFF"));
   }
 }
 
 void displayChanel() {
   oled.home();
   oled.setCursor(13, 5);
-  oled.print("         ");
+  oled.print(F("         "));
 
   oled.home();
   oled.setCursor(13, 5);
-  oled.print("ch. : ");
+  oled.print(F("ch. : "));
   oled.print(midiChanel);
 }
 
 void displayBpm() {
   oled.home();
   oled.setCursor(13, 6);
-  oled.print("         ");
+  oled.print(F("         "));
 
   oled.home();
   oled.setCursor(13, 6);
-  oled.print("bpm : ");
+  oled.print(F("bpm : "));
   oled.print(bpm);
 }
 
@@ -208,17 +208,17 @@ void displayBpm() {
 void displayPlay() {
   oled.home();
   oled.setCursor(13, 7);
-  oled.print("         ");
+  oled.print(F("         "));
 
   oled.home();
   oled.setCursor(13, 7);
   if (play) {
     oled.invertText(true);
-    oled.print("play");
+    oled.print(F("play"));
     oled.invertText(false);
   } else {
     oled.invertText(false);
-    oled.print("stop");
+    oled.print(F("stop"));
   }
 }
 
@@ -226,20 +226,20 @@ void displayCursor() {
   if (!isEditing) {
     for (int i = 0; i <= 7; i++) {
       oled.setCursor(0, i);
-      oled.print(" ");
+      oled.print(F(" "));
       oled.setCursor(119, i);
-      oled.print(" ");
+      oled.print(F(" "));
     }
     oled.setCursor(0, selectedRow);
-    oled.print(">");
+    oled.print(F(">"));
     oled.setCursor(119, selectedRow);
-    oled.print("<");
+    oled.print(F("<"));
   } else {
     oled.setCursor(0, selectedRow);
     oled.invertText(true);
-    oled.print("*");
+    oled.print(F("*"));
     oled.setCursor(119, selectedRow);
-    oled.print("*");
+    oled.print(F("*"));
     oled.invertText(false);
   }
 }
@@ -248,15 +248,15 @@ void clearOled() {
   // clear oled. looks ugly but it works
   oled.setScale(2);
   oled.setCursor(0, 0);
-  oled.print("                    ");
+  oled.print(F("                    "));
   oled.setCursor(0, 2);
-  oled.print("                    ");
+  oled.print(F("                    "));
   oled.setCursor(0, 4);
-  oled.print("                    ");
+  oled.print(F("                    "));
   oled.setCursor(0, 6);
-  oled.print("                    ");
+  oled.print(F("                    "));
   oled.setCursor(0, 8);
-  oled.print("                    ");
+  oled.print(F("                    "));
   oled.setScale(1);
 }
 
@@ -271,28 +271,12 @@ void printDot(int i, bool active) {
   oled.setScale(2);
   oled.invertText(active);
   oled.setCursor(x, y);
-  oled.print("o");
+  oled.print(F("o"));
 }
 
 void displayGrid() {
   for (int i = 0; i < 16; i++) {
     printDot(i, heldKeys[i]);
-  }
-}
-
-void displaySeq() {
-  oled.home();
-  oled.setCursor(13, 0);
-  oled.print("SEQ");
-  oled.setCursor(0, 6);
-  oled.print("pos:32");
-  oled.setCursor(50, 6);
-  oled.print("note:C#");
-
-  
-  oled.fastLineH(40, 0, 127);
-  for (int i = 0; i<32; i++) {
-    oled.fastLineV(1+4*i, 40, 10);
   }
 }
 
@@ -344,8 +328,8 @@ void processEncoder() {
       {
       case 0:
         mode += enc.dir();
-        if (mode > 2) mode = 0;
-        if (mode < 0) mode = 2;
+        if (mode > 1) mode = 0;
+        if (mode < 0) mode = 1;
         displayAll();
         break;
 
@@ -410,17 +394,6 @@ void processEncoder() {
   }
 
   if (enc.press()) {
-    if (selectedRow == 1 && mode == SEQ_MODE) {
-      seqEdit = !seqEdit;
-      clearOled();
-      if (seqEdit) {
-        displaySeq();
-      } else {
-        displayAll();
-      }
-      return;
-    } 
-
     if (selectedRow == 7) {
       play = !play;
       if (play) MIDI.sendRealTime(midi::Start);
